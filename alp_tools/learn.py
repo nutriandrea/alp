@@ -59,7 +59,7 @@ def show_concept(meta, index):
     print()
     print("💡 Read the concept file for content.")
 
-if __name__ == "__main__":
+def main():
     import argparse
     parser = argparse.ArgumentParser(description="Navigate an ALP vault")
     parser.add_argument("--vault", default=".", help="Path to ALP vault")
@@ -71,3 +71,6 @@ if __name__ == "__main__":
         show_concept(meta, args.concept)
     else:
         show_syllabus(meta)
+
+if __name__ == "__main__":
+    main()

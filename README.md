@@ -1,47 +1,61 @@
-# ALP — Agent Learning Protocol
+<p align="center">
+  <img src="https://img.shields.io/badge/status-experimental-orange" alt="Status">
+  <img src="https://img.shields.io/badge/spec-v0.1-blueviolet" alt="Spec">
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License">
+  <img src="https://img.shields.io/github/stars/nutriandrea/alp?style=social" alt="Stars">
+</p>
 
-**Learn what. Learn how. Learn progressively.**
+<h1 align="center">⛰️ ALP — Agent Learning Protocol</h1>
+<p align="center"><b>MCP for learning.</b> An open standard for structured learning pathways that AI agents can follow.</p>
 
-ALP is an open standard for structured learning pathways that AI agents can
-follow. Think of it as **MCP for learning**: just as MCP standardizes how
-agents access **tools**, ALP standardizes how they learn **skills**.
+<p align="center">
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="spec/v0.1.md">Spec</a> •
+  <a href="docs/origin.md">Origin Story</a> •
+  <a href="ROADMAP.md">Roadmap</a>
+</p>
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│   The Four Pillars of Agent-Native Content                   │
-│                                                              │
-│   Tools     MCP    │  How agents DO things                   │
-│   Knowledge OKF    │  How agents KNOW things                 │
-│   Behavior  Skills │  How agents ACT                         │
-│   Learning  ALP    │  HOW AGENTS LEARN  ← YOU ARE HERE       │
-└──────────────────────────────────────────────────────────────┘
-```
+---
 
 ## Why ALP?
 
-Current standards cover tools (MCP), knowledge bases (OKF/Vaults), and
-agent behaviours (Skills). But **none** cover learning pathways:
+MCP gave agents **tools**. OKF gave them **knowledge**. Skills gave them
+**behaviour**. But nothing gives them a **curriculum**.
 
-- How does an agent progress from beginner → expert in a domain?
-- How does it know prerequisites before attempting a concept?
-- How does it practice, verify, and consolidate what it learned?
-- How does a YouTube tutorial become something an agent can study?
+```
+╔══════════════════════════════════════════════════════════╗
+║           The Four Pillars of Agent Content              ║
+╠════════════╦══════════╦══════════╦═══════════════════════╣
+║   MCP      ║   OKF    ║  Skills  ║   ALP                 ║
+║  Tools     ║ Knowledge║ Behaviour║   LEARNING            ║
+║   DO       ║   KNOW   ║   ACT    ║   LEARN               ║
+╚════════════╩══════════╩══════════╩═══════════════════════╝
+```
 
-ALP fills this gap: a **progressive learning protocol** that any agent,
-any LLM, any source format can use.
+Current standards cover tools, knowledge bases, and agent behaviours.
+**None** cover learning pathways — how an agent progresses from beginner
+to expert, practices, verifies, and consolidates what it learned.
 
 ## Quick Start
 
 ```bash
-# 1. Create an ALP vault from any text
-cat transcript.txt | python tools/alp-extract --name my-tutorial
+# Install
+pip install alp-tools
 
-# 2. Navigate the syllabus
-python tools/alp-learn --vault my-tutorial/
+# Try it with the built-in example
+alp-learn --vault examples/semantic-search-tutorial/
 
-# 3. Study concept by concept
-python tools/alp-learn --vault my-tutorial/ --concept 0
+# Create a vault from any text
+cat transcript.txt | alp-extract --name my-tutorial
+
+# Study concept by concept
+alp-learn --vault my-tutorial/ --concept 0
 ```
+
+*Or run without install: `pip install pyyaml && python alp_tools/learn.py ...`*
+
+---
 
 ## How It Works
 
@@ -57,69 +71,107 @@ my-vault/
 └── glossary.md         # Terminology
 ```
 
-An agent consuming ALP:
+### Agent Learning Loop
 
-1. **Loads `alp.md`** — reads the syllabus (~200 tokens)
-2. **Checks prerequisites** — navigates to pre-req vaults if needed
-3. **Loads concepts in order** — one file at a time (~500–2K tokens each)
-4. **Takes notes** — writes structured notes in its personal vault
-5. **Practices** — runs exercises after relevant concepts
-6. **Consolidates** — generates cheat sheets, summaries
-7. **Verifies** — executes labs with verification criteria
+| Step | What the agent does | Context cost |
+|------|-------------------|--------------|
+| 1. Load syllabus | Read `alp.md` metadata + curriculum | ~200 tokens |
+| 2. Check prerequisites | Navigate to pre-req vaults if unmet | ~100 tokens |
+| 3. Load concept | Read one concept file | ~500–2K tokens |
+| 4. Take notes | Write structured notes in personal vault | ~200 tokens |
+| 5. Practice | Load and execute practice guide | ~300–1K tokens |
+| 6. Consolidate | Generate cheat sheet, summary | ~200 tokens |
+| 7. Verify | Execute lab, check verification criteria | ~500 tokens |
 
-## Key Design Principles
+**Key insight**: An agent never loads more than 2–3 concepts at a time,
+keeping the learning path under ~5K context tokens.
+
+### Vault Composition
+
+- **`concepts/`** — Atomic knowledge chunks. One idea per file.
+  [`what-is-semantic-search.md`](examples/semantic-search-tutorial/concepts/01-what-is-semantic-search.md)
+- **`practices/`** — Executable exercises. Install, configure, verify.
+  [`setup.md`](examples/semantic-search-tutorial/practices/01-setup.md)
+- **`labs/`** — Extended projects with verification criteria.
+  [`build-search-engine.md`](examples/semantic-search-tutorial/labs/01-build-search-engine.md)
+- **`cheatsheet.md`** — Quick reference for recall.
+- **`glossary.md`** — Key terms and definitions.
+
+### Linking
+
+Vaults connect using `[[wiki-links]]`:
+
+```
+[[what-is-semantic-search]]          ← same vault
+[[alp:python-basics/concepts/01]]    ← another vault
+[[practices/01-setup]]               ← practice guide
+```
+
+---
+
+## Design Principles
 
 | Principle | Why |
 |-----------|-----|
-| **Simple** | Markdown + YAML. No SDK, no runtime, no dependencies |
-| **Composable** | Vaults link via `[[wiki-links]]`; prerequisites chain across vaults |
-| **Progressive** | Load syllabus first, concepts on demand. Context-efficient |
-| **Universal** | Works with any agent, any LLM, any source (YouTube, blog, doc, lecture) |
-| **Compatible** | Every ALP file is a valid [OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) file |
+| **Simple** | Markdown + YAML. No SDK, no runtime. |
+| **Composable** | Vaults link via `[[wiki-links]]`; prerequisites chain across vaults. |
+| **Progressive** | Load syllabus first, concepts on demand. Context-efficient. |
+| **Universal** | Works with any agent, any LLM, any source format. |
+| **Compatible** | Every ALP file is a valid [OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) file. |
 
-## The Origin Story
-
-ALP was born from a gap analysis of the agent content ecosystem.
-After mapping MCP (tools), OKF (knowledge), and Skills (behaviour),
-we found **no standard for learning pathways** — the "fourth pillar".
-
-The protocol evolved through three iterations:
-
-| Version | Name | Insight |
-|---------|------|---------|
-| v0.0 | VKIF | Agent file format for knowledge transfer |
-| v0.1 | TRAIL | Tree-structured agent learning pathways |
-| **v0.2** | **ALP** | **Simple directory convention + OKF compatible** |
-
-The full story is in [docs/origin.md](docs/origin.md).
+---
 
 ## Tools
 
-| Tool | Description |
-|------|-------------|
-| [`alp-extract`](tools/alp-extract) | Convert raw text/transcript → ALP vault |
-| [`alp-learn`](tools/alp-learn) | Navigate an ALP vault (syllabus → concepts) |
-| `alp-validate` | Validate ALP vault structure |
+| Tool | Description | Usage |
+|------|-------------|-------|
+| `alp-extract` | Convert raw text → ALP vault | `cat text \| alp-extract --name my-vault` |
+| `alp-learn` | Navigate vault syllabus + concepts | `alp-learn --vault path/ --concept 0` |
+| `alp-validate` | Validate vault structure & frontmatter | `alp-validate path/` |
+
+*Install: `pip install alp-tools`*
+
+---
 
 ## Spec Status
 
-**v0.1 — Experimental.** The spec is stable but expects iteration as
-the ecosystem learns what works. See [spec/v0.1.md](spec/v0.1.md).
+**v0.1 — Experimental.** The specification is published for early adopters
+and ecosystem feedback. Expect iteration as real-world usage reveals what
+works. See [`spec/v0.1.md`](spec/v0.1.md).
 
-## Compatibility
+### Compatibility
 
-ALP v0.1 is compatible with OKF v0.1. An ALP vault IS an OKF bundle.
-See [docs/okf-profile.md](docs/okf-profile.md).
+ALP v0.1 is a superset of [OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) v0.1.
+Every ALP file is a valid OKF file. See [`docs/okf-profile.md`](docs/okf-profile.md).
 
-## Example
+---
 
-The [`examples/semantic-search-tutorial/`](examples/semantic-search-tutorial/)
-directory is a complete ALP vault for building semantic search.
+## Origin & Roadmap
 
-```bash
-python tools/alp-learn --vault examples/semantic-search-tutorial/
-```
+ALP was born from a gap analysis of the agent content ecosystem.
+The evolution: **VKIF (v0.0) → TRAIL (v0.1) → ALP (v0.2)**.
 
-## License
+- [Full origin story](docs/origin.md) — How the fourth pillar was discovered
+- [Changelog](CHANGELOG.md) — Every iteration documented
+- [Roadmap](ROADMAP.md) — v0.3 → v1.0
 
-Apache 2.0. Free to use, implement, and extend.
+---
+
+## Contributing
+
+ALP is an open standard. Contributions are welcome:
+
+- **Create vaults** — Convert tutorials, docs, courses into ALP format
+- **Build tools** — Extractors, viewers, integrations with agents
+- **Improve the spec** — PRs with real-world rationale
+- **Spread the word** — Star the repo, share with your network
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+<p align="center">
+  <b>⛰️ ALP — Agent Learning Protocol</b><br>
+  <a href="https://github.com/nutriandrea/alp">github.com/nutriandrea/alp</a><br>
+  <sub>Apache 2.0 — Free to use, implement, and extend</sub>
+</p>

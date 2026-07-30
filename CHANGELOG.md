@@ -1,6 +1,13 @@
 # Changelog
 
-## v0.2 — ALP (Current)
+## v0.2.1 — Polish & Publish (Current)
+
+- `pip install alp-tools` — package published on PyPI
+- README rewritten with badges, visual layout, GitHub topics
+- Tools refactored into proper `alp_tools` Python package
+- `alp-validate` added (vault structure validator)
+
+## v0.2 — ALP
 
 **Rebranded to ALP (Agent Learning Protocol).** Simplified to a directory
 convention + OKF compatibility. Three letters, like MCP.

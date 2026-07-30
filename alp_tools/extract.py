@@ -71,7 +71,7 @@ def extract(vault_name, text, source_url="", source_type="doc"):
     print(f"   {len(curriculum)} concepts")
     print(f"   Run: alp-learn --vault {vault_dir}")
 
-if __name__ == "__main__":
+def main():
     import argparse
     parser = argparse.ArgumentParser(description="Convert text to ALP vault")
     parser.add_argument("--name", required=True, help="Vault name (directory)")
@@ -86,3 +86,6 @@ if __name__ == "__main__":
         text = sys.stdin.read()
 
     extract(args.name, text, args.source, args.type)
+
+if __name__ == "__main__":
+    main()

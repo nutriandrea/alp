@@ -12,6 +12,10 @@ def err(msg, file=""):
 def warn(msg, file=""):
     warnings.append(f"{'['+file+']' if file else ''} {msg}")
 
+def reset():
+    errors.clear()
+    warnings.clear()
+
 def check_frontmatter(content, path, required_type):
     match = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
     if not match:
@@ -92,7 +96,7 @@ def validate_vault(root):
             expected = "alp-cheatsheet" if opt == "cheatsheet.md" else "alp-glossary"
             check_frontmatter(f.read_text(), opt, expected)
 
-if __name__ == "__main__":
+def main():
     import argparse
     parser = argparse.ArgumentParser(description="Validate an ALP vault")
     parser.add_argument("vault", nargs="?", default=".", help="Path to ALP vault")
@@ -111,3 +115,6 @@ if __name__ == "__main__":
     if not errors and not warnings:
         print("✅ Vault is valid")
     sys.exit(1 if errors else 0)
+
+if __name__ == "__main__":
+    main()
