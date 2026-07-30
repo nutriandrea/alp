@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/status-experimental-orange" alt="Status">
-  <img src="https://img.shields.io/badge/spec-v0.1-blueviolet" alt="Spec">
+  <img src="https://img.shields.io/badge/spec-v0.2-blueviolet" alt="Spec">
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License">
   <img src="https://img.shields.io/github/stars/nutriandrea/alp?style=social" alt="Stars">
 </p>
