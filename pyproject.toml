@@ -1,15 +1,21 @@
 [build-system]
 requires = ["setuptools>=64"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "alp-tools"
-version = "0.1.0"
-description = "ALP (Agent Learning Protocol) — tools for creating and navigating agent learning vaults"
+name = "alp-vault"
+version = "0.2.1"
+description = "ALP (Agent Learning Protocol) — tools for creating, navigating, and validating agent learning vaults"
 authors = [{name = "ALP Contributors"}]
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
 dependencies = ["pyyaml>=6.0"]
+readme = "README.md"
+keywords = ["alp", "agent-learning-protocol", "mcp", "ai-agents", "learning", "curriculum", "vault", "llm", "agents"]
+
+[project.urls]
+Homepage = "https://github.com/nutriandrea/alp"
+Repository = "https://github.com/nutriandrea/alp"
 
 [project.scripts]
 alp-extract = "alp_tools.extract:main"

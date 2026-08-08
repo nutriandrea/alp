@@ -2,10 +2,12 @@
 
 ## v0.2.1 — Polish & Publish (Current)
 
-- `pip install alp-tools` — package published on PyPI
+- `pip install alp-vault` — package published on PyPI (name `alp-vault`)
 - README rewritten with badges, visual layout, GitHub topics
 - Tools refactored into proper `alp_tools` Python package
 - `alp-validate` added (vault structure validator)
+- New example vaults: `rag-from-scratch` (6 concepts), `mcp-server-development` (6 concepts)
+- GitHub Actions workflow for automated PyPI publishing on release
 
 ## v0.2 — ALP
 

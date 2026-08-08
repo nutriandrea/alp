@@ -2,6 +2,8 @@
   <img src="https://img.shields.io/badge/status-experimental-orange" alt="Status">
   <img src="https://img.shields.io/badge/spec-v0.2-blueviolet" alt="Spec">
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License">
+  <img src="https://img.shields.io/pypi/v/alp-vault" alt="PyPI version">
+  <img src="https://img.shields.io/pypi/pyversions/alp-vault" alt="Python versions">
   <img src="https://img.shields.io/github/stars/nutriandrea/alp?style=social" alt="Stars">
 </p>
 
@@ -41,7 +43,7 @@ to expert, practices, verifies, and consolidates what it learned.
 
 ```bash
 # Install
-pip install alp-tools
+pip install alp-vault
 
 # Try it with the built-in example
 alp-learn --vault examples/semantic-search-tutorial/
@@ -54,6 +56,23 @@ alp-learn --vault my-tutorial/ --concept 0
 ```
 
 *Or run without install: `pip install pyyaml && python alp_tools/learn.py ...`*
+
+## Vaults
+
+Ready-to-learn ALP vaults, straight from the repo:
+
+| Vault | What you'll learn | Size |
+|-------|-------------------|------|
+| [`semantic-search-tutorial`](examples/semantic-search-tutorial/) | Build a semantic search engine from scratch | 5 concepts |
+| [`rag-from-scratch`](examples/rag-from-scratch/) | The full RAG pipeline: chunking, retrieval, generation, eval | 6 concepts |
+| [`mcp-server-development`](examples/mcp-server-development/) | Build a production-ready MCP server | 6 concepts |
+
+```bash
+alp-learn --vault examples/rag-from-scratch/
+```
+
+> **Want to contribute a vault?** Convert a tutorial you love into ALP
+> format and open a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -129,7 +148,7 @@ Vaults connect using `[[wiki-links]]`:
 | `alp-learn` | Navigate vault syllabus + concepts | `alp-learn --vault path/ --concept 0` |
 | `alp-validate` | Validate vault structure & frontmatter | `alp-validate path/` |
 
-*Install: `pip install alp-tools`*
+*Install: `pip install alp-vault`*
 
 ---
 
