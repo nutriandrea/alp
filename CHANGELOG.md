@@ -1,13 +1,13 @@
 # Changelog
 
-## v0.2.1 — Polish & Publish (Current)
+## v0.3.0 — Example Vaults & CI (Current)
 
-- `pip install alp-vault` — package published on PyPI (name `alp-vault`)
-- README rewritten with badges, visual layout, GitHub topics
-- Tools refactored into proper `alp_tools` Python package
-- `alp-validate` added (vault structure validator)
-- New example vaults: `rag-from-scratch` (6 concepts), `mcp-server-development` (6 concepts)
-- GitHub Actions workflow for automated PyPI publishing on release
+- New example vaults: `rag-from-scratch` (6 concepts) and
+  `mcp-server-development` (6 concepts)
+- GitHub Actions workflow to auto-publish to PyPI on release
+- README updated with vault table and PyPI badges
+
+## v0.2.1 — Polish & Publish
 
 ## v0.2 — ALP
 
